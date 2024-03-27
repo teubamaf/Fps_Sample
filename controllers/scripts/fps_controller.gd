@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export var SPEED_DEFAULT : float = 5.0
 @export var TOGGLE_CROUNCH : bool = true
 @export var SPEED_CROUCH : float = 3.0
+@export var SPEED_SPRINT : float = 7.0
 @export var ACCELERATION : float = 0.1
 @export var DECELERATION : float = 0.25
 @export var JUMP_VELOCITY : float = 4.5
