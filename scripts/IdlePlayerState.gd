@@ -15,5 +15,5 @@ func update(delta):
 	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION)
 	PLAYER.update_velocity()
 	
-	if Global.player.velocity.length() > 0.0:
+	if PLAYER.velocity.length() > 0.0:
 		transition.emit("WalkingPlayerState")
