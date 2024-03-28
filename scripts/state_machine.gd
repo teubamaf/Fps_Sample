@@ -12,6 +12,7 @@ func _ready():
 			child.transition.connect(on_child_transition)
 		else:
 			push_warning("state machine cointains incompatible child")
+	await owner.ready
 	CURRENT_STATE.enter()
 	
 func _process(delta):

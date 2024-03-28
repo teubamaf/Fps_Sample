@@ -1,13 +1,13 @@
-extends CharacterBody3D
+class_name Player extends CharacterBody3D
 
 @export var SPEED_DEFAULT : float = 5.0
-@export var TOGGLE_CROUNCH : bool = true
+#@export var TOGGLE_CROUNCH : bool = true
 @export var SPEED_CROUCH : float = 3.0
 @export var SPEED_SPRINT : float = 7.0
 @export var ACCELERATION : float = 0.1
 @export var DECELERATION : float = 0.25
 @export var JUMP_VELOCITY : float = 4.5
-@export_range(5,10,0.1) var CROUCH_SPEED : float = 7.0
+#@export_range(5,10,0.1) var CROUCH_SPEED : float = 7.0
 @export var MOUSE_SENSITIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
@@ -40,16 +40,16 @@ func _input(event):
 	if event.is_action_pressed("exit"):
 		get_tree().quit()
 	
-	if event.is_action_pressed("crouch") and TOGGLE_CROUNCH == true:
-		toggle_crounch()
+#	if event.is_action_pressed("crouch") and TOGGLE_CROUNCH == true:
+#		toggle_crounch()
 		
 	
 	#HOLD TO CROUCH
 	
-	if event.is_action_pressed("crouch") and _is_crouching == false and TOGGLE_CROUNCH == false:
-		crouching(true)
-	if event.is_action_released("crouch") and TOGGLE_CROUNCH == false :
-		crouching(false)
+#	if event.is_action_pressed("crouch") and _is_crouching == false and TOGGLE_CROUNCH == false:
+#		crouching(true)
+#	if event.is_action_released("crouch") and TOGGLE_CROUNCH == false :
+#		crouching(false)
 		
 func _update_camera(delta):
 	
@@ -97,6 +97,43 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
+	
+
+
+
+#Permit to have information
+#func toggle_crounch():
+	#if _is_crouching == true and CROUCH_SHAPECAST.is_colliding() == false:
+		#crouching(false)
+	#elif _is_crouching == false:
+		#crouching(true)
+		#
+#
+#func crouching(state : bool ):
+	#match state :
+		#false :
+			#ANIMATIONPLAYER.play("Crouch" , 0 , -CROUCH_SPEED, true)
+			#set_movement_speed("default")
+		#true :
+			#ANIMATIONPLAYER.play("Crouch" , 0 ,CROUCH_SPEED)
+			#set_movement_speed("crouching")
+
+#
+#func _on_animation_player_animation_started(anim_name):
+	#if anim_name == "Crouch" : 
+		#_is_crouching = !_is_crouching
+#
+#func set_movement_speed(state : String):
+	#match state :
+		#"default":
+			#_speed = SPEED_DEFAULT
+		#"crouching":
+			#_speed = SPEED_CROUCH
+
+func update_gravity(delta) -> void :
+	velocity.y -= gravity * delta
+
+func update_input(speed: float , acceleration: float , deceleration: float) -> void :
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -107,35 +144,7 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION)
-
-	move_and_slide()
-
-
-#Permit to have information
-func toggle_crounch():
-	if _is_crouching == true and CROUCH_SHAPECAST.is_colliding() == false:
-		crouching(false)
-	elif _is_crouching == false:
-		crouching(true)
 		
-
-func crouching(state : bool ):
-	match state :
-		false :
-			ANIMATIONPLAYER.play("Crouch" , 0 , -CROUCH_SPEED, true)
-			set_movement_speed("default")
-		true :
-			ANIMATIONPLAYER.play("Crouch" , 0 ,CROUCH_SPEED)
-			set_movement_speed("crouching")
-
-
-func _on_animation_player_animation_started(anim_name):
-	if anim_name == "Crouch" : 
-		_is_crouching = !_is_crouching
-
-func set_movement_speed(state : String):
-	match state :
-		"default":
-			_speed = SPEED_DEFAULT
-		"crouching":
-			_speed = SPEED_CROUCH
+	
+func update_velocity() -> void :
+	move_and_slide()

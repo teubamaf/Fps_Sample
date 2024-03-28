@@ -8,12 +8,10 @@ func _ready():
 	visible = false
 	Global.debug = self
 	
-	#add_debug_property("Fps", frames_per_second)
 	
 func _process(delta):
 	if visible:
 		frames_per_second = "%.2f" % (1.0/delta)
-#		property.text = property.name + ": " + frames_per_second
 	
 func _input(event):
 	# Toggle debug panel
@@ -31,10 +29,3 @@ func add_property(title: String, value, order):
 	elif visible :
 		target.text = title + ": " + str(value)
 		property_container.move_child(target,order)
-
-
-#func add_debug_property(title: String, value):
-	#property = Label.new()
-	#property_container.add_child(property)
-	#property.name = title
-	#property.text = property.name + value
